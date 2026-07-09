@@ -1,8 +1,20 @@
+import os
+
 import discord
 from discord import app_commands
 from discord.ext import commands
 
 from financeDatabase import FinanceDB
+
+
+def _env_int(name: str, default: int) -> int:
+    raw_value = os.getenv(name)
+    if raw_value is None:
+        return default
+    try:
+        return int(raw_value)
+    except ValueError:
+        return default
 
 
 class OthersCog(commands.Cog):
@@ -24,7 +36,7 @@ class OthersCog(commands.Cog):
         self.iron_to_zitcoin_rate = 1 / self.zitcoin_to_iron_rate
         self.emerald_to_zitcoin_rate = 1 / self.zitcoin_to_emerald_rate
         self.gold_to_zitcoin_rate = 1 / self.zitcoin_to_gold_rate
-        self.zitcoin_member_role_id = 1523049840995733524
+        self.zitcoin_member_role_id = _env_int("ZITCOIN_MEMBER_ROLE_ID", 0)
 
     def _embed(self, title: str, description: str, tone: str = "primary") -> discord.Embed:
         return discord.Embed(title=title, description=description, color=self.palette.get(tone, self.palette["primary"]))

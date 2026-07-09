@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+import os
 
 import discord
 from discord import app_commands
@@ -15,6 +16,16 @@ def format_discord_timestamp(value):
         unix_ts = int(value.timestamp())
         return f"<t:{unix_ts}:F> (<t:{unix_ts}:R>)"
     return str(value)
+
+
+def _env_int(name: str, default: int) -> int:
+    raw_value = os.getenv(name)
+    if raw_value is None:
+        return default
+    try:
+        return int(raw_value)
+    except ValueError:
+        return default
 
 
 class BankingCog(commands.Cog):
@@ -35,6 +46,11 @@ class BankingCog(commands.Cog):
         self.zitcoins_10_32_interest_rate = 0.1
         self.zitcoins_32_64_interest_rate = 0.075
         self.zitcoins_above_64_interest_rate = 0.05
+
+        self.withdrawal_requests_channel_id = _env_int("WITHDRAWAL_REQUESTS_CHANNEL_ID", 0)
+        self.deposit_requests_channel_id = _env_int("DEPOSIT_REQUESTS_CHANNEL_ID", 0)
+        self.loan_requests_channel_id = _env_int("LOAN_REQUESTS_CHANNEL_ID", 0)
+        self.transactions_logs_channel_id = _env_int("TRANSACTIONS_LOGS_CHANNEL_ID", 0)
 
     def _build_embed(self, title: str, description: str, tone: str = "primary") -> discord.Embed:
         embed = discord.Embed(
@@ -173,9 +189,9 @@ class BankingCog(commands.Cog):
     async def ui_user_request(self, interaction: discord.Interaction, request_type: str, amount: float):
         try:
             channel_map = {
-                "withdrawal": 1523049697948733522,
-                "deposit": 1523049675484037282,
-                "loan": 1523049754681151688,
+                "withdrawal": self.withdrawal_requests_channel_id,
+                "deposit": self.deposit_requests_channel_id,
+                "loan": self.loan_requests_channel_id,
             }
             tone_map = {"withdrawal": "warning", "deposit": "info", "loan": "primary"}
             db_finance = FinanceDB()
@@ -233,7 +249,7 @@ class BankingCog(commands.Cog):
                 await self._send_interaction_text(interaction, "Invalid Amount", "Transfer amount must be greater than zero.", "warning")
                 return
 
-            transactions_logs = self.bot.get_channel(1523049492121784550)
+            transactions_logs = self.bot.get_channel(self.transactions_logs_channel_id)
             db = FinanceDB()
             db_transactions = TransactionsDB()
             sender_discord_id = interaction.user.id
@@ -520,7 +536,7 @@ class BankingCog(commands.Cog):
     @commands.hybrid_command()
     async def request_withdrawal(self, ctx: commands.Context, amount: float):
         try:
-            withdrawal_requests_channel = self.bot.get_channel(1523049697948733522)
+            withdrawal_requests_channel = self.bot.get_channel(self.withdrawal_requests_channel_id)
             db_finance = FinanceDB()
             db_requests = RequestsDB()
             discord_id = ctx.author.id
@@ -553,7 +569,7 @@ class BankingCog(commands.Cog):
     @commands.hybrid_command()
     async def request_deposit(self, ctx: commands.Context, amount: float):
         try:
-            deposit_requests_channel = self.bot.get_channel(1523049675484037282)
+            deposit_requests_channel = self.bot.get_channel(self.deposit_requests_channel_id)
             db_finance = FinanceDB()
             db_requests = RequestsDB()
             discord_id = ctx.author.id
@@ -582,7 +598,7 @@ class BankingCog(commands.Cog):
     @commands.hybrid_command()
     async def request_loan(self, ctx: commands.Context, amount: float):
         try:
-            loan_requests_channel = self.bot.get_channel(1523049754681151688)
+            loan_requests_channel = self.bot.get_channel(self.loan_requests_channel_id)
             db_finance = FinanceDB()
             db_requests = RequestsDB()
             discord_id = ctx.author.id
@@ -816,7 +832,7 @@ class BankingCog(commands.Cog):
     @commands.hybrid_command()
     async def transfer(self, ctx: commands.Context, mc_username: str, amount: float):
         try:
-            transactions_logs = self.bot.get_channel(1523049492121784550)
+            transactions_logs = self.bot.get_channel(self.transactions_logs_channel_id)
             db = FinanceDB()
             db1 = TransactionsDB()
             sender_discord_id = ctx.author.id

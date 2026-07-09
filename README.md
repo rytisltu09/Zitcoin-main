@@ -250,3 +250,9 @@ If you deploy to another server, update these variables:
 - Never commit real tokens or database passwords
 - Restrict admin commands to trusted roles only
 - Rotate credentials if exposed
+
+## Future Plans
+
+The original vision for ZitCoin included a Paper plugin that would integrate the in-game Minecraft economy with the Discord banking system. Development was planned but not completed after the server the project targeted was shut down.
+
+The current repository represents the completed Discord banking platform.

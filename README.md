@@ -1,7 +1,12 @@
 # ZitCoin Discord Bot v. 1.0
 
-ZitCoin is a Discord bot that manages a server economy backed by MySQL.
-It provides registration, balances, transfers, requests, loans, admin tooling, and interactive GUI panels.
+
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
+![Discord.py](https://img.shields.io/badge/discord.py-2.x-5865F2.svg)
+![MySQL](https://img.shields.io/badge/MySQL-supported-orange.svg)
+
+
+ZitCoin is a Discord banking bot designed for Minecraft communities. It provides a persistent virtual economy backed by MySQL, allowing players to register, transfer currency, request deposits or withdrawals, manage loans, and interact through Discord's modern slash commands and GUI components.
 
 ## Features
 
@@ -52,7 +57,7 @@ Required:
 - TRANSACTIONS_LOGS_CHANNEL_ID
 - ZITCOIN_MEMBER_ROLE_ID
 
-Example (IDs can vary): 
+Example Configuration: 
 
 	DISCORD_TOKEN=your_discord_bot_token
 	MYSQL_USER=your_mysql_user
@@ -78,7 +83,7 @@ Example commands:
 
 	python3 -m venv myenv
 	source myenv/bin/activate
-	pip install discord.py python-dotenv mysql-connector-python OR pip install -r requirements.txt
+	pip install -r requirements.txt
 	python3 migrate_to_mysql.py
 	python3 main.py
 

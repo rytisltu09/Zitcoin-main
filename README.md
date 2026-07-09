@@ -1,4 +1,4 @@
-# ZitCoin Discord Bot
+# ZitCoin Discord Bot v. 1.0
 
 ZitCoin is a Discord bot that manages a server economy backed by MySQL.
 It provides registration, balances, transfers, requests, loans, admin tooling, and interactive GUI panels.

@@ -121,6 +121,11 @@ Most commands are slash-accessible. Hybrid commands are also defined, but with c
 
 ### Panels
 
+<img width="656" height="218" alt="image" src="https://github.com/user-attachments/assets/c5ddb814-ee5b-4cbb-ae3d-4f83f2273f1d" />
+<img width="656" height="218" alt="image" src="https://github.com/user-attachments/assets/54a4845f-40bc-4da2-90cb-04c57aecaa5d" />
+
+
+
 - /zitcoin: Opens user banking dropdown panel
 - /zitcoin_admin: Opens admin banking dropdown panel (admin only)
 - /zca: Posts channel embed with Register, Unregister, and Start Banking buttons (admin only)

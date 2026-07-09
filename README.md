@@ -132,6 +132,9 @@ Most commands are slash-accessible. Hybrid commands are also defined, but with c
 
 ### User Commands
 
+<img width="565" height="652" alt="image" src="https://github.com/user-attachments/assets/4811df37-a54a-41c3-a962-be207ecf01fc" />
+
+
 - /register <mc_username>
 - /unregister
 - /ping

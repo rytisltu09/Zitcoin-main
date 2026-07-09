@@ -166,6 +166,9 @@ Most commands are slash-accessible. Hybrid commands are also defined, but with c
 
 The zca panel is designed to be posted in your ZitCoin channel.
 
+<img width="773" height="361" alt="image" src="https://github.com/user-attachments/assets/8c104aba-88a8-4ed4-89db-c75d2382e963" />
+
+
 Buttons:
 
 - Register: Opens a modal for Minecraft username and registers the user
